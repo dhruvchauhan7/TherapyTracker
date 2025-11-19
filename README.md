@@ -1,6 +1,6 @@
-#  TheraTrack Mini (MVP)
+#  Therapy Tracker (MVP)
 
-**TheraTrack Mini** is a lightweight therapy clinic management MVP built as a **full-stack project** using **.NET 8 Web API** and **Angular 17**.  
+**Therapy Tracker** is a lightweight therapy clinic management MVP built as a **full-stack project** using **.NET 8 Web API** and **Angular 17**.  
 
 ---
 
