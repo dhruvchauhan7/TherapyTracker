@@ -1,0 +1,70 @@
+<div class="page">
+  <div class="header-row">
+    <h2>Dashboard</h2>
+    <span class="role-pill">{{ badgeText() }}</span>
+  </div>
+
+  <p *ngIf="error" class="error">❌ {{ error }}</p>
+  <div *ngIf="loading">Loading…</div>
+
+  <div *ngIf="!loading" class="cards">
+    <div class="card">
+      <div class="card-title">Clients</div>
+      <div class="card-value">{{ totalClients }}</div>
+      <a routerLink="/clients" class="card-link">Manage clients →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Total Sessions</div>
+      <div class="card-value">{{ totalSessions }}</div>
+      <a routerLink="/sessions" class="card-link">View sessions →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Completed (30 days)</div>
+      <div class="card-value">{{ completed30 }}</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Upcoming (7 days)</div>
+      <div class="card-value">{{ upcoming7 }}</div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading" class="grid-2">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Upcoming Sessions</h3>
+        <a routerLink="/sessions" class="panel-link">All sessions</a>
+      </div>
+      <table class="tbl" *ngIf="upcomingList.length; else noUpcoming">
+        <thead><tr><th>When</th><th>Client</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let s of upcomingList">
+            <td>{{ fmt(s.startTime) }}</td>
+            <td>{{ clientName(s.clientId) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noUpcoming><div class="muted">No upcoming sessions in the next 7 days.</div></ng-template>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Recent Activity</h3>
+        <a routerLink="/sessions" class="panel-link">Open sessions</a>
+      </div>
+      <table class="tbl" *ngIf="recentList.length; else noRecent">
+        <thead><tr><th>Client</th><th>When</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let s of recentList">
+            <td>{{ clientName(s.clientId) }}</td>
+            <td>{{ fmt(s.endTime || s.startTime) }}</td>
+            <td><span class="chip">{{ statusChip(s.status) }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noRecent><div class="muted">No sessions yet.</div></ng-template>
+    </div>
+  </div>
+</div>

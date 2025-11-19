@@ -1,0 +1,76 @@
+<div class="page">
+  <h2>Payroll</h2>
+
+  <div *ngIf="error" class="error">❌ {{ error }}</div>
+
+  <div class="filters">
+    <label>
+      <span>From</span>
+      <input type="date" [(ngModel)]="from">
+    </label>
+    <label>
+      <span>To</span>
+      <input type="date" [(ngModel)]="to">
+    </label>
+    <label>
+      <span>Client</span>
+      <select [(ngModel)]="clientId">
+        <option [ngValue]="null">All</option>
+        <option *ngFor="let c of clients" [ngValue]="c.id">{{ c.name }}</option>
+      </select>
+    </label>
+    <label>
+      <span>Clinician</span>
+      <select [(ngModel)]="clinicianId">
+        <option [ngValue]="null">All</option>
+        <option *ngFor="let h of clinicians" [ngValue]="h.id">{{ h.name }}</option>
+      </select>
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" [(ngModel)]="onlyUnlocked">
+      Show only unlocked
+    </label>
+    <div class="flex-spacer"></div>
+    <button class="btn" (click)="exportCsv()" [disabled]="!filtered.length">Export CSV</button>
+  </div>
+
+  <div *ngIf="loading">Loading…</div>
+
+  <table *ngIf="!loading" class="tbl">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>Clinician</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+        <th>Payroll</th>
+        <th *ngIf="isAdmin"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of filtered">
+        <td>{{ s.id }}</td>
+        <td>{{ clientName(s.clientId) }}</td>
+        <td>{{ clinicianName(s.clinicianId) }}</td>
+        <td>{{ fmt(s.startTime) }}</td>
+        <td>{{ fmt(s.endTime) }}</td>
+        <td><span class="chip done">COMPLETED</span></td>
+        <td>
+          <span class="lock" [class.locked]="s.lockedForPayroll">
+            {{ s.lockedForPayroll ? 'Locked' : 'Unlocked' }}
+          </span>
+        </td>
+        <td *ngIf="isAdmin" class="actions">
+          <button class="btn small" (click)="toggleLock(s)">
+            {{ s.lockedForPayroll ? 'Unlock' : 'Lock' }}
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="!filtered.length">
+        <td colspan="8" class="muted">No sessions match the filters.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

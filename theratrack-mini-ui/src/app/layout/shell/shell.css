@@ -1,0 +1,207 @@
+:root {
+  --teal: #0d9488;
+  --teal-dark: #0f766e;
+  --bg: #f5f7f9;
+  --card: #fff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+}
+
+/* top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  height: 56px;
+  background: #0b7f76;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.12);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+/* make the badge stand out */
+.role-badge {
+  background: #fff;
+  color: #0d9488;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+}
+
+/* restyle the logout button */
+.btn-small {
+  background: #fff;
+  color: #0d9488;
+  border: 1px solid #fff;
+  border-radius: 9999px;
+  font-size: 13px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+  .btn-small:hover {
+    background: #0d9488;
+    color: #fff;
+    border-color: #fff;
+  }
+
+
+
+.brand {
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.topbar-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.role-badge {
+  background: rgba(255,255,255,.2);
+  padding: 4px 8px;
+  border-radius: 999px;
+  text-transform: capitalize;
+  font-size: 12px;
+}
+
+/* layout */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 56px);
+  background: var(--bg);
+}
+
+/* sidebar */
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid var(--border);
+  padding: 16px 12px;
+}
+
+  .sidebar a {
+    display: block;
+    padding: 10px 12px;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 6px;
+  }
+
+    .sidebar a:hover {
+      background: #f1f5f9;
+    }
+
+    .sidebar a.active {
+      background: #e0f2f1;
+      color: var(--teal-dark);
+      font-weight: 600;
+    }
+
+/* content */
+.content {
+  padding: 24px;
+}
+
+  .content > *:first-child {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  }
+
+/* shared small buttons */
+.btn {
+  background-color: var(--teal);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+  .btn:hover {
+    background-color: var(--teal-dark);
+  }
+
+.btn-small {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* ===== Strong badge & logout ===== */
+.topbar {
+  background: #0b7f76; /* slightly deeper teal for better overall contrast */
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+/* DARK badge: teal pill with white text (very legible) */
+.role-badge {
+  background: #065f46; /* dark teal */
+  color: #ffffff; /* high contrast */
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 13px;
+  letter-spacing: .35px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.22);
+}
+
+/* logout button with clear affordance */
+.btn-small {
+  background: #ffffff;
+  color: #0b7f76;
+  border: 1px solid #0b7f76;
+  border-radius: 9999px;
+  font-size: 13px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all .18s ease;
+}
+
+  .btn-small:hover {
+    background: #0b7f76;
+    color: #ffffff;
+  }
+
+.main, .content, .page, .page-body, .page-header {
+  position: relative; /* ensure pseudo-element targeting is safe */
+  background: transparent; /* prevent unintended white plates */
+}
+
+  /* Disable any pseudo-element that may be drawing that rounded box */
+  .main::before,
+  .content::before,
+  .page::before,
+  .page-header::before {
+    content: none !important;
+    display: none !important;
+  }
+
+/* Also ensure the area around the H2 remains clean */
+h1, h2, .section-title {
+  background: transparent;
+}

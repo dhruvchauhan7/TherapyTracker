@@ -1,0 +1,176 @@
+<div class="page">
+  <h2>Sessions</h2>
+
+  <div class="topbar">
+    <div class="search-row">
+      <input type="text" [(ngModel)]="search" placeholder="Search by client or clinician" />
+      <button type="button" (click)="clearSearch()" [disabled]="!search">Clear</button>
+    </div>
+
+    <button *ngIf="isAdmin"
+            type="button"
+            class="btn primary"
+            (click)="openCreate()">
+      + New Session
+    </button>
+  </div>
+
+  <div *ngIf="loading">Loading…</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <table *ngIf="!loading && filteredSessions.length" class="tbl">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>Clinician</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+        <th>Payroll Lock</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of filteredSessions">
+        <td>{{ s.id }}</td>
+        <!-- Prefer server-provided names, fall back to lookup -->
+        <td>{{ s.clientName || clientName(s.clientId) }}</td>
+        <td>{{ s.clinicianName || clinicianName(s.clinicianId) }}</td>
+        <td>{{ fmt(s.startTime) }}</td>
+        <td>{{ fmt(s.endTime) }}</td>
+        <td><span class="chip">{{ statusLabel(s.status) }}</span></td>
+        <td>{{ s.lockedForPayroll ? 'Yes' : 'No' }}</td>
+        <td class="actions">
+          <button type="button" (click)="openDetail(s)">View / Update</button>
+          <button *ngIf="canComplete(s)" type="button" (click)="complete(s)">Mark Completed</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !filteredSessions.length" class="muted">
+    No sessions{{ search ? ' match your search' : '' }}.
+  </div>
+</div>
+
+<!-- Create Session Modal (Admin) -->
+<div *ngIf="showCreate" class="modal-overlay" (click)="closeCreate()">
+  <div class="modal-card small" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>New Session</h3>
+      <button class="close-btn" (click)="closeCreate()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <label>
+          <div>Client</div>
+          <select [(ngModel)]="createForm.clientId">
+            <option [ngValue]="null" disabled>Choose client…</option>
+            <option *ngFor="let c of clients" [ngValue]="c.id">{{ c.name }}</option>
+          </select>
+        </label>
+
+        <label>
+          <div>Clinician</div>
+          <select [(ngModel)]="createForm.clinicianId">
+            <option [ngValue]="null" disabled>Choose clinician…</option>
+            <option *ngFor="let h of clinicians" [ngValue]="h.id">{{ h.name }}</option>
+          </select>
+        </label>
+
+        <label>
+          <div>Start</div>
+          <input type="datetime-local" [(ngModel)]="createForm.startLocal">
+        </label>
+
+        <label>
+          <div>End (optional)</div>
+          <input type="datetime-local" [(ngModel)]="createForm.endLocal">
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" (click)="createSession()">Create</button>
+      <button class="btn ghost" (click)="closeCreate()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div *ngIf="showDetail" class="modal-overlay" (click)="closeDetail()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h3>Session #{{ current?.id }}</h3>
+      <button class="close-btn" (click)="closeDetail()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="info-grid">
+        <div><strong>Client:</strong> {{ clientName(current?.clientId!) }}</div>
+        <div><strong>Clinician:</strong> {{ clinicianName(current?.clinicianId!) }}</div>
+        <div><strong>Start:</strong> {{ fmt(current?.startTime) }}</div>
+        <div><strong>End:</strong> {{ fmt(current?.endTime) }}</div>
+        <div><strong>Status:</strong> {{ statusLabel(current?.status!) }}</div>
+        <div><strong>Payroll Lock:</strong> {{ current?.lockedForPayroll ? 'Yes' : 'No' }}</div>
+      </div>
+
+      <div *ngIf="isExtended(current)">
+        <div *ngIf="current?.note">
+          <h4>SOAP Note</h4>
+          <pre class="note-box">{{ current?.note?.soapText }}</pre>
+        </div>
+
+        <div *ngIf="current?.entries?.length">
+          <h4>Entries</h4>
+          <table class="entries-table">
+            <thead><tr><th>Goal</th><th>Value</th><th>Unit</th></tr></thead>
+            <tbody>
+              <tr *ngFor="let e of current?.entries">
+                <td>{{ goalName(e.goalId) }}</td>
+                <td>{{ e.value }}</td>
+                <td>{{ goalUnit(e.goalId) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="isAdmin" class="actions-row">
+        <button (click)="togglePayrollLock()">
+          {{ current?.lockedForPayroll ? 'Unlock Payroll' : 'Lock for Payroll' }}
+        </button>
+        <button (click)="reopenFromModal()" [disabled]="current?.status === 0">
+          Reopen Session
+        </button>
+      </div>
+
+      <div *ngIf="isClinician" class="clinician-tools">
+        <div>
+          <h4>Add SOAP Note</h4>
+          <textarea [(ngModel)]="noteText" rows="5" placeholder="S: ...  O: ...  A: ...  P: ..."
+                    [disabled]="current?.status === 1"></textarea>
+          <button (click)="addNote()" [disabled]="!noteText || current?.status === 1">Save Note</button>
+        </div>
+
+        <div>
+          <h4>Add Entry</h4>
+          <div class="add-entry">
+            <select [(ngModel)]="selectedGoalId" [disabled]="current?.status === 1">
+              <option [ngValue]="null" disabled>Select goal...</option>
+              <option *ngFor="let g of goalsForCurrent" [ngValue]="g.id">{{ g.name }}</option>
+            </select>
+            <input type="number" [(ngModel)]="entryValue" [disabled]="current?.status === 1" placeholder="Value" />
+            <button (click)="addEntry()" [disabled]="!selectedGoalId || entryValue==null || current?.status === 1">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button *ngIf="isClinician && current && current.status !== 1" (click)="completeFromModal()">Mark Completed</button>
+      <button (click)="closeDetail()">Close</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+.page {
+  padding: 1rem;
+}
+
+.error {
+  color: #b00020;
+  margin: .5rem 0;
+}
+
+.muted {
+  color: #666;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+  .filters label {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+  }
+
+  .filters .checkbox {
+    flex-direction: row;
+    gap: 6px;
+    align-items: center;
+    margin-left: 8px;
+  }
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #111;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+  .btn.small {
+    padding: 6px 10px;
+    font-weight: 500;
+  }
+
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+  .tbl th, .tbl td {
+    border: 1px solid #e6e6e6;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .tbl th {
+    background: #f8fafc;
+  }
+
+.chip.done {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #16a34a;
+  color: #166534;
+  background: #dcfce7;
+  font-size: 12px;
+}
+
+.lock {
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+  .lock.locked {
+    background: #fee2e2;
+    border-color: #ef4444;
+    color: #991b1b;
+  }
+
+.actions {
+  white-space: nowrap;
+}

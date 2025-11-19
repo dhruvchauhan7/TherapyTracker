@@ -1,0 +1,6 @@
+@TheraTrackMini.Api_HostAddress = http://localhost:5133
+
+GET {{TheraTrackMini.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

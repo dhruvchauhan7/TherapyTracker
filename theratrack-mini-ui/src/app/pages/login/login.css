@@ -1,0 +1,173 @@
+/* --- reset & layout base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.topbar {
+  height: 56px;
+  background: #0d9488;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.12);
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.auth-wrap {
+  min-height: calc(100vh - 56px);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #f6fbfb, #eef3f6);
+  padding: 24px;
+}
+
+/* --- card --- */
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(2, 8, 20, .08);
+  padding: 28px;
+}
+
+.auth-head h1 {
+  margin: 0 0 6px 0;
+  font-size: 28px;
+}
+
+.muted {
+  color: #667085;
+  margin: 0 0 18px 0;
+}
+
+/* --- form layout --- */
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+  .field > span {
+    font-size: 14px;
+    color: #374151;
+  }
+
+/* --- input & eye alignment --- */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+  .input-wrap input {
+    flex: 1;
+    height: 44px;
+    padding: 0 44px 0 14px; /* space for the eye icon */
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 16px;
+    line-height: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color .15s, box-shadow .15s, background .15s;
+  }
+
+    .input-wrap input:focus {
+      outline: none;
+      border-color: #0d9488;
+      box-shadow: 0 0 0 3px rgba(13,148,136,.15);
+    }
+
+    /* Hide native Edge password reveal icon */
+    .input-wrap input::-ms-reveal {
+      display: none;
+    }
+
+/* --- eye icon button --- */
+.icon-btn {
+  position: absolute;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+  .icon-btn:hover {
+    color: #0d9488;
+  }
+
+/* --- buttons --- */
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .2s, opacity .2s;
+}
+
+.btn-primary {
+  background: #0d9488;
+  color: #fff;
+}
+
+  .btn-primary:hover {
+    background: #0f766e;
+  }
+
+.btn[disabled] {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+/* --- hint & errors --- */
+.hint {
+  color: #6b7280;
+  font-size: 13px;
+  margin: 10px 0 0;
+  line-height: 1.4;
+}
+
+.error {
+  margin: 10px 0 0;
+  color: #b91c1c;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+/* --- responsive --- */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 22px;
+    border-radius: 12px;
+  }
+
+  .auth-head h1 {
+    font-size: 24px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

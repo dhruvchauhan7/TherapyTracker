@@ -1,0 +1,47 @@
+# ---------- Visual Studio / Rider ----------
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ---------- VS Code ----------
+.vscode/
+.history/
+
+# ---------- .NET build ----------
+**/bin/
+**/obj/
+*.log
+*.cache
+*.ilk
+*.pdb
+*.mdb
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ---------- Angular / Node ----------
+theratrack-mini-ui/node_modules/
+theratrack-mini-ui/dist/
+theratrack-mini-ui/.angular/
+theratrack-mini-ui/.cache/
+theratrack-mini-ui/npm-debug.log*
+theratrack-mini-ui/yarn-error.log*
+
+# ---------- Environment / Secrets ----------
+TheraTrackMini.Api/appsettings.Development.json
+*.env
+*.env.local
+
+# ---------- OS junk ----------
+.DS_Store
+Thumbs.db

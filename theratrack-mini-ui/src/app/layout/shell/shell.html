@@ -1,0 +1,22 @@
+<header class="topbar">
+  <div class="brand">TheraTrack Mini</div>
+  <div class="topbar-right">
+    <span class="role-badge" *ngIf="userRole">{{ userRole }}</span>
+    <button class="btn btn-small" (click)="logout()">Logout</button>
+  </div>
+</header>
+
+
+<div class="layout">
+  <aside class="sidebar">
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/clients" routerLinkActive="active">Clients</a>
+    <a routerLink="/sessions" routerLinkActive="active">Sessions</a>
+    <a routerLink="/progress" routerLinkActive="active">Progress</a>
+    <a routerLink="/payroll" routerLinkActive="active">Payroll</a>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
