@@ -23,17 +23,22 @@
 <h2>📸 Screenshots</h2>
 
 <p align="center">
-  <img src="https://github.com/dhruvchauhan7/People-Management-System/blob/main/Screenshots/1.png" width="45%" />
-  <img src="https://github.com/dhruvchauhan7/People-Management-System/blob/main/Screenshots/2.png" width="45%" />
+  <img src="https://github.com/dhruvchauhan7/TherapyTracker/blob/main/Screenshots/0.png" width="45%" />
+  <img src="https://github.com/dhruvchauhan7/TherapyTracker/blob/main/Screenshots/1.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/dhruvchauhan7/People-Management-System/blob/main/Screenshots/3.png" width="45%" />
-  <img src="https://github.com/dhruvchauhan7/People-Management-System/blob/main/Screenshots/4.png" width="45%" />
+  <img src="https://github.com/dhruvchauhan7/TherapyTracker/blob/main/Screenshots/2.png" width="45%" />
+  <img src="https://github.com/dhruvchauhan7/TherapyTracker/blob/main/Screenshots/3.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/dhruvchauhan7/People-Management-System/blob/main/Screenshots/5.png" width="45%" />
+  <img src="https://github.com/dhruvchauhan7/TherapyTracker/blob/main/Screenshots/4.png" width="45%" />
+  <img src="https://github.com/dhruvchauhan7/TherapyTracker/blob/main/Screenshots/5.png" width="45%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/dhruvchauhan7/TherapyTracker/blob/main/Screenshots/6.png" width="45%" />
 </p>
 
 
